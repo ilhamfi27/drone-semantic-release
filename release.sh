@@ -26,7 +26,7 @@ else
   exit 1
 fi
 
-if [ ! -f .releaserc || "$PLUGIN_USE_LOCAL_RC" == "true" ]; then
+if [ ! -f .releaserc || "$PLUGIN_USE_LOCAL_RC" = "true" ]; then
   echo ".releaserc not found using defaults"
   cp /semantic-release/.releaserc.json .releaserc
 fi

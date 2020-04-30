@@ -13,20 +13,19 @@ kind: pipeline
 name: default
 
 steps:
-- name: semantic-release
-  image: cenk1cenk2/semantic-release
-  settings:
-    mode: release # "release" means the actual release and "predict" means to generate the version in dry run to use it e.g. before build
-    git_method: gh # set for git authentication with gh (Github), gl (GitLab), bb (BitBucket), cr (Credentials)
-    use_local_rc: false # use defaults or a custom rc file true | false
-    # arguments: -- # arguments for passing to the semantic-release
-    version_file: .tags # the file where the version will be persisted, defaults to .release-version
-    git_user_name: bot # semantic release committer name (git config user.name)
-    git_user_email: bot@example.com # semantic release committer email (git config user.email)
-    github_token: # semantic release token (for authentication)
-      from_secret: github_token
-    npm_token: # semantic release token (for authentication)
-      from_secret: npm_token
+  - name: semantic-release
+    image: cenk1cenk2/semantic-release-drone
+    settings:
+      mode: release # "release" means the actual release and "predict" means to generate the version in dry run to use it e.g. before build
+      git_method: gh # set for git authentication with gh (Github), gl (GitLab), bb (BitBucket), cr (Credentials)
+      use_local_rc: false # use defaults or a custom rc file true | false
+      # arguments: -- # arguments for passing to the semantic-release
+      git_user_name: bot # semantic release committer name (git config user.name)
+      git_user_email: bot@example.com # semantic release committer email (git config user.email)
+      github_token: # semantic release token (for authentication)
+        from_secret: github_token
+      npm_token: # semantic release token (for authentication)
+        from_secret: npm_token
 ```
 
 or for BitBucket
