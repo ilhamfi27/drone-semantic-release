@@ -40,9 +40,9 @@ fi
 git config --global user.name "$GIT_COMMITTER_NAME"
 git config --global user.email "$GIT_COMMITTER_EMAIL"
 
-if [ ! -f .releaserc ] || [ "$PLUGIN_USE_LOCAL_RC" = "true" ]; then
-  echo ".releaserc not found using defaults"
-  cp /semantic-release/.releaserc.json .releaserc
+if [ [ ! -f release.config.js ] || [ ! -f .releaserc ] ] && [ "$PLUGIN_USE_LOCAL_RC" != "true" ]; then
+  echo "release.config.js || .releaserc not found using defaults"
+  cp /semantic-release/release.config.js release.config.js
 fi
 
 if [ "$MODE" = "predict" ]; then
@@ -52,4 +52,4 @@ else
   semantic-release $PLUGIN_ARGUMENTS || exit 1
 fi
 
-rm .releaserc
+rm release.config.js

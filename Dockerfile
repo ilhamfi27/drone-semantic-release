@@ -1,6 +1,6 @@
 FROM node:12-alpine
 
-ADD release.sh create-credentials.js .releaserc.json /semantic-release/
+ADD release.sh create-credentials.js release.config.js /semantic-release/
 
 RUN yarn global add semantic-release @semantic-release/changelog @semantic-release/exec @semantic-release/git \
   && yarn global add markdown-toc \

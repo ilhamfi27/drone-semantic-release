@@ -1,4 +1,4 @@
-{
+module.exports = {
   "branches": [
     "master",
     {
@@ -28,7 +28,7 @@
       "path": "@semantic-release/git",
       "assets": [
         "CHANGELOG.md",
-        "${README_LOCATION:-README.md}",
+        `${process.env.README_LOCATION} ? ${process.env.README_LOCATION} : README.md`,
         "yarn.lock",
         "npm-shrinkwrap.json"
       ],
