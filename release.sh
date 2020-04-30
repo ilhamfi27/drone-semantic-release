@@ -26,6 +26,10 @@ else
   exit 1
 fi
 
+# Set git variables
+git config --global user.name "$GIT_COMMITTER_NAME"
+git config --global user.email "$PLUGIN_GIT_USER_EMAIL"
+
 if [ ! -f .releaserc ] || [ "$PLUGIN_USE_LOCAL_RC" = "true" ]; then
   echo ".releaserc not found using defaults"
   cp /semantic-release/.releaserc.json .releaserc
@@ -33,16 +37,9 @@ fi
 
 if [ "$MODE" = "predict" ]; then
   echo 'Running semantic release in dry mode...'
-  VERSION_NUMBER=$( (semantic-release -d || exit 1) | grep 'Published release' | sed -E 's/.*([0-9]+.[0-9]+.[0-9]+)/\1/')
+  semantic-release -d || exit 1
 else
   semantic-release $PLUGIN_ARGUMENTS || exit 1
 fi
 
 rm .releaserc
-
-if [ -n "$VERSION_NUMBER" ]; then
-  echo "Successfully released $VERSION_NUMBER"
-else
-  echo "There is no new version found (file is empty), skipping release..."
-  exit 1
-fi
