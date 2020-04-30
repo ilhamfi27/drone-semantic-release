@@ -49,7 +49,7 @@ if [ "$MODE" = "predict" ]; then
   echo 'Running semantic release in dry mode...'
   semantic-release -d || exit 1
 else
-  [ $UPDATE_README = 'true' ] && markdown-toc /drone/src/${README_LOCATION:-README.md} -i --no-firsth1 --bullets "-"
+  [ $UPDATE_README = 'true' ] && markdown-toc /drone/src/${README_LOCATION:-README.md} --bullets="-" -i --no-firsth1
   semantic-release $PLUGIN_ARGUMENTS || exit 1
 fi
 
