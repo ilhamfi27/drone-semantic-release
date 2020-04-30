@@ -26,9 +26,17 @@ else
   exit 1
 fi
 
+if [ -z $GIT_COMMITER_NAME ]; then
+  echo "GIT Username not defined!"
+  exit 127
+elif [ -z $GIT_COMMITER_EMAIL ]; then
+  echo "GIT E-Mail not defined!"
+  exit 127
+fi
+
 # Set git variables
 git config --global user.name "$GIT_COMMITTER_NAME"
-git config --global user.email "$PLUGIN_GIT_USER_EMAIL"
+git config --global user.email "$GIT_COMMITTER_EMAIL"
 
 if [ ! -f .releaserc ] || [ "$PLUGIN_USE_LOCAL_RC" = "true" ]; then
   echo ".releaserc not found using defaults"
