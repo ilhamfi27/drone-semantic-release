@@ -22,7 +22,7 @@ module.exports = {
     "@semantic-release/changelog",
     {
       "path": "@semantic-release/exec",
-      "cmd": "[ $UPDATE_README == 'true' ] && markdown-toc /drone/src/${README_LOCATION:-README.md} -i --no-firsth1"
+      "cmd": "[ $UPDATE_README = 'true' ] && markdown-toc /drone/src/${README_LOCATION:-README.md} -i --no-firsth1"
     },
     {
       "path": "@semantic-release/git",
