@@ -1,0 +1,19 @@
+kind: pipeline
+trigger:
+  event:
+    - tag
+  branch:
+    - master
+
+steps:
+  - name: publish
+    image: plugins/docker
+    settings:
+      repo: cenk1cenk2/semantic-release-drone
+      username:
+        from_secret: docker_hub_username
+      password:
+        from_secret: docker_hub_password
+      tag:
+        - latest
+        - ${DRONE_TAG}

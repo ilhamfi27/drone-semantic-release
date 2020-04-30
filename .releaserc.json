@@ -19,20 +19,20 @@
     "@semantic-release/git"
   ],
   "prepare": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
     "@semantic-release/changelog",
-    {
-      "path": "@semantic-release/exec",
-      "cmd": "echo -n \"${nextRelease.version}\" > .release-version"
-    },
     {
       "path": "@semantic-release/git",
       "assets": [
         "CHANGELOG.md"
       ],
       "message": "release: ${nextRelease.version} [ci skip]"
-    }
+    },
+    "@semantic-release/github",
+    "@semantic-release/npm"
   ],
-  "publish": false,
-  "success": false,
+  "publish": true,
+  "success": true,
   "fail": false
 }
