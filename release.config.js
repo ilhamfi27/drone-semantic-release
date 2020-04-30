@@ -24,7 +24,7 @@ module.exports = {
       "path": "@semantic-release/git",
       "assets": [
         "CHANGELOG.md",
-        `${process.env.README_LOCATION} ? ${process.env.README_LOCATION} : README.md`,
+        process.env.README_LOCATION ? process.env.README_LOCATION : 'README.md' ,
         "yarn.lock",
         "npm-shrinkwrap.json"
       ],
