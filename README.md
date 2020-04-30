@@ -19,6 +19,8 @@ steps:
       mode: release # "release" means the actual release and "predict" means to generate the version in dry run to use it e.g. before build
       git_method: gh # set for git authentication with gh (Github), gl (GitLab), bb (BitBucket), cr (Credentials)
       use_local_rc: false # use defaults or a custom rc file true | false
+      update_readme: true # update the readme utilizing https://www.npmjs.com/package/markdown-toc
+      readme_location: README.md # readme path
       # arguments: -- # arguments for passing to the semantic-release
       git_user_name: bot # semantic release committer name (git config user.name)
       git_user_email: bot@example.com # semantic release committer email (git config user.email)
