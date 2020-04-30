@@ -33,9 +33,16 @@ fi
 
 if [ "$MODE" = "predict" ]; then
   echo 'Running semantic release in dry mode...'
-  MOCK_RUN=$(semantic-release -d $PLUGIN_ARGUMENTS || exit 1)
-  echo $MOCK_RUN | grep 'Published release' | sed -E 's/.*([0-9]+.[0-9]+.[0-9]+)/\1/'
-  echo $MOCK_RUN | grep 'no relevant changes'
+  VERSION_NUMBER=$( (semantic-release -d || exit 1) | grep 'Published release' | sed -E 's/.*([0-9]+.[0-9]+.[0-9]+)/\1/')
 else
   semantic-release $PLUGIN_ARGUMENTS || exit 1
+fi
+
+rm .releaserc
+
+if [ -n "$VERSION_NUMBER" ]; then
+  echo "Successfully released $VERSION_NUMBER"
+else
+  echo "There is no new version found (file is empty), skipping release..."
+  exit 1
 fi
