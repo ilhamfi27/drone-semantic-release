@@ -19,8 +19,6 @@
     "@semantic-release/git"
   ],
   "prepare": [
-    "@semantic-release/commit-analyzer",
-    "@semantic-release/release-notes-generator",
     "@semantic-release/changelog",
     {
       "path": "@semantic-release/git",
@@ -28,9 +26,7 @@
         "CHANGELOG.md"
       ],
       "message": "release: ${nextRelease.version} [ci skip]"
-    },
-    "@semantic-release/github",
-    "@semantic-release/npm"
+    }
   ],
   "publish": true,
   "success": true,
