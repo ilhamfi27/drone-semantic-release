@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 export MODE=$PLUGIN_MODE
 
@@ -40,7 +40,7 @@ fi
 git config --global user.name "$GIT_COMMITTER_NAME"
 git config --global user.email "$GIT_COMMITTER_EMAIL"
 
-if [ [ ! -f release.config.js ] || [ ! -f .releaserc ] ] && [ "$PLUGIN_USE_LOCAL_RC" != "true" ]; then
+if [ ! -f release.config.js ] && [ ! -f .releaserc ] && [ "$PLUGIN_USE_LOCAL_RC" != "true" ]; then
   echo "release.config.js || .releaserc not found using defaults"
   cp /semantic-release/release.config.js release.config.js
 fi
