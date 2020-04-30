@@ -27,8 +27,5 @@
       ],
       "message": "release: ${nextRelease.version} [ci skip]"
     }
-  ],
-  "publish": true,
-  "success": true,
-  "fail": false
+  ]
 }

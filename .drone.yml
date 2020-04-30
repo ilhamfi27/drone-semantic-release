@@ -1,7 +1,7 @@
 kind: pipeline
 trigger:
   event:
-    - tag
+    - push
   branch:
     - master
 

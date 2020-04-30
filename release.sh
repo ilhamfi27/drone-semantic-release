@@ -34,7 +34,7 @@ fi
 if [ "$MODE" = "predict" ]; then
   echo 'Running semantic release in dry mode...'
 
-  echo $( (semantic-release -d $PLUGIN_ARGUMENTS || exit 1) | grep 'Published release' | sed -E 's/.*([0-9]+.[0-9]+.[0-9]+)/\1/')
+  (semantic-release -d $PLUGIN_ARGUMENTS || exit 1) | grep 'Published release' | sed -E 's/.*([0-9]+.[0-9]+.[0-9]+)/\1/'
 else
   semantic-release $PLUGIN_ARGUMENTS || exit 1
 fi
