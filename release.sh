@@ -26,11 +26,11 @@ else
   exit 1
 fi
 
-if [ -z $GIT_COMMITER_NAME ]; then
-  echo "GIT Username not defined!"
+if [ -z "$PLUGIN_GIT_USER_NAME" ]; then
+  echo "GIT Username not defined! Please set git_user_name in Drone plugin settings."
   exit 127
-elif [ -z $GIT_COMMITER_EMAIL ]; then
-  echo "GIT E-Mail not defined!"
+elif [ -z "$PLUGIN_GIT_USER_EMAIL" ]; then
+  echo "GIT E-Mail not defined! Please set git_user_email in Drone plugin settings."
   exit 127
 fi
 
