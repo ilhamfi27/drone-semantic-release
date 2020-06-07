@@ -9,7 +9,7 @@ steps:
   - name: publish
     image: plugins/docker
     settings:
-      repo: cenk1cenk2/semantic-release-drone
+      repo: cenk1cenk2/drone-semantic-release
       username:
         from_secret: docker_hub_username
       password:
