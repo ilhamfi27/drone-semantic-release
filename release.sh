@@ -44,9 +44,10 @@ create_git_credentials() {
   # Set git variables
   git config --global user.name "$GIT_COMMITTER_NAME"
   git config --global user.email "$GIT_COMMITTER_EMAIL"
+  git config --global credential.helper store
 
   # login with credentials
-  git config --global url."https://$GIT_CREDENTIALS@".insteadOf https://
+  git config --global credential.helper "!f() { echo 'username=${PLUGIN_GIT_LOGIN}'; echo 'password=${PLUGIN_GIT_PASSWORD}'; }; f"
 }
 
 update_readme_toc() {
