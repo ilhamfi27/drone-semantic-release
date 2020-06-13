@@ -46,7 +46,7 @@ create_git_credentials() {
   git config --global user.email "$GIT_COMMITTER_EMAIL"
 
   # login with credentials
-  git config --global credential.helper '!f() { sleep 1; echo "username=${PLUGIN_GIT_LOGIN}"; echo "password=${PLUGIN_GIT_PASSWORD}"; }; f'
+  git config --global url."https://$GIT_CREDENTIALS@".insteadOf https://
 }
 
 update_readme_toc() {
