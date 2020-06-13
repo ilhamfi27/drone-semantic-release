@@ -65,30 +65,36 @@ if [ ! -z $SEMANTIC_RELEASE ] && [ "$SEMANTIC_RELEASE" = "true" ]; then
   # copy git config if given
   if [ ! -f release.config.js ] && [ ! -f .releaserc ] && [ "$PLUGIN_USE_LOCAL_RC" != "true" ]; then
     echo "release.config.js || .releaserc not found using defaults"
-    cp /semantic-release/release.config.js release.config.js
+    cp /semantic-release/release-config/npm.js release.config.js
   fi
 
   if [ "$MODE" = "predict" ]; then
     echo 'Running semantic release in dry mode...'
     semantic-release -d || exit 1
   else
-    # handle readme update with semantic_release if semantic release is on
-    [ $UPDATE_README_TOC = 'true' ] && echo "Updating README@${README_LOCATION}" && markdown-toc /drone/src/${README_LOCATION} --bullets="-" -i --no-firsth1
-
     semantic-release $PLUGIN_ARGUMENTS || exit 1
   fi
 
+  rm release.config.js
 fi
 
 # handle readme toc update explicitly if semantic-release is disabled
 if [ -z $SEMANTIC_RELEASE ] || [ "$SEMANTIC_RELEASE" = "false" ]; then
+
   create_git_credentials
+
+  cp /semantic-release/release-config/readme-toc.js release.config.js
+
+  echo "Updating TOC README@${README_LOCATION}"
   [ $UPDATE_README_TOC = 'true' ] && echo "Updating README@${README_LOCATION}" && markdown-toc /drone/src/${README_LOCATION} --bullets="-" -i --no-firsth1
-  (cd /drone/src/ && git add ${README_LOCATION}) && git commit -m "chore(release): update readme toc [skip ci]" && git push -u origin $DRONE_REPO_BRANCH
+
+  semantic-release || exit 1
+
+  rm release.config.js
 fi
 
 # handle dockerhub readme update
 if [ ! -z "$UPDATE_DOCKER_README" ] && [ "$UPDATE_DOCKER_README" == "true" ]; then
   echo "Updating DockerHUB README@${README_LOCATION}"
-  exec /semantic-release/update-docker-readme.sh
+  exec /semantic-release/scripts/update-docker-readme.sh
 fi
