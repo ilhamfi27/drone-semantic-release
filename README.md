@@ -1,6 +1,15 @@
-# semantic-release-drone
+# drone-semantic-release
 
-Drone plugin for making semantic releases based on https://github.com/semantic-release/semantic-release.
+[![Build Status](https://drone.kilic.dev/api/badges/cenk1cenk2/drone-semantic-release/status.svg)](https://drone.kilic.dev/cenk1cenk2/drone-semantic-release)
+![Docker Pulls](https://img.shields.io/docker/pulls/cenk1cenk2/drone-semantic-release)
+![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/cenk1cenk2/drone-semantic-release)
+![Docker Image Version (latest by date)](https://img.shields.io/docker/v/cenk1cenk2/drone-semantic-release)
+![GitHub last commit](https://img.shields.io/github/last-commit/cenk1cenk2/drone-semantic-release)
+
+Drone plugin for making semantic releases based on https://github.com/semantic-release/semantic-release. With some added twists ofc.
+
+<!-- toc -->
+<!-- tocstop -->
 
 ## Usage
 
@@ -16,11 +25,11 @@ steps:
   - name: semantic-release
     image: cenk1cenk2/drone-semantic-release
     settings:
+      # arguments: -- # semantic release
+      semantic_release: true # enable or disable semantic release
       mode: release # "release" means the actual release and "predict" means to generate the version in dry run to use it e.g. before build
       git_method: gh # set for git authentication with gh (Github), gl (GitLab), bb (BitBucket), cr (Credentials)
       use_local_rc: false # use defaults or a custom rc file true | false
-      update_readme: true # update the readme utilizing https://www.npmjs.com/package/markdown-toc
-      readme_location: README.md # readme path
       # arguments: -- # arguments for passing to the semantic-release
       git_user_name: bot # semantic release committer name (git config user.name)
       git_user_email: bot@example.com # semantic release committer email (git config user.email)
@@ -28,6 +37,9 @@ steps:
         from_secret: github_token
       npm_token: # semantic release token (for authentication)
         from_secret: npm_token
+      # arguments: -- # arguments for updating readme on dockerhub, readme_location is set from up
+      update_readme_toc: true # update the readme utilizing https://www.npmjs.com/package/markdown-toc
+      readme_location: README.md # readme path
       # arguments: -- # arguments for updating readme on dockerhub, readme_location is set from up
       # if you want to push readme to docker hub in this step
       update_docker_readme: false
@@ -59,6 +71,10 @@ git_login: bot
 git_password:
   from_secret: password
 ```
+
+## Custom Release File
+
+You can overwrite the default configuration defined in `release.config.js` by adding `release.config.js` or `.releaserc` to your repository. But this can be overwritten by setting `use_local_rc` variable to `true`.
 
 ## What it does
 
