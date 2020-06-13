@@ -14,7 +14,7 @@ name: default
 
 steps:
   - name: semantic-release
-    image: cenk1cenk2/semantic-release-drone
+    image: cenk1cenk2/drone-semantic-release
     settings:
       mode: release # "release" means the actual release and "predict" means to generate the version in dry run to use it e.g. before build
       git_method: gh # set for git authentication with gh (Github), gl (GitLab), bb (BitBucket), cr (Credentials)
@@ -28,28 +28,36 @@ steps:
         from_secret: github_token
       npm_token: # semantic release token (for authentication)
         from_secret: npm_token
+      # arguments: -- # arguments for updating readme on dockerhub, readme_location is set from up
+      # if you want to push readme to docker hub in this step
+      update_docker_readme: false
+      docker_username:
+        from_secret: docker_username
+      docker_password:
+        from_secret: docker_password
+      docker_repo: cenk1cenk2/some-repository
 ```
 
 or for BitBucket
 
 ```yml
-    bitbucket_token: # semantic release token (for authentication)
-      from_secret: token
+bitbucket_token: # semantic release token (for authentication)
+  from_secret: token
 ```
 
 or for GitLab
 
 ```yml
-    gitlab_token: # semantic release token (for authentication)
-      from_secret: token
+gitlab_token: # semantic release token (for authentication)
+  from_secret: token
 ```
 
 or for any git server (including BitBucket cloud which does not support tokens):
 
 ```yml
-    git_login: bot
-    git_password:
-      from_secret: password
+git_login: bot
+git_password:
+  from_secret: password
 ```
 
 ## What it does
@@ -58,11 +66,4 @@ Runs on master branch only. Skips any actions below while on other branches.
 
 - automatically creates a semantic version number
 - attaches the version number as repo's git tag
-- exposes the version number into the file `.release-version`
 - automatically creates, populates and pushes CHANGELOG.md to your master branch
-
-If `mode: predict` is specified, only the `.release-version` file is generated; no tag is attached. Typical use-case is when you want to embed the version into your file for the cli `--version` command
-
-## License
-
-MIT

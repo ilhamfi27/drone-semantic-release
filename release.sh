@@ -13,7 +13,15 @@ export GIT_COMMITTER_NAME=$PLUGIN_GIT_USER_NAME
 export GIT_COMMITTER_EMAIL=$PLUGIN_GIT_USER_EMAIL
 export NPM_TOKEN=$PLUGIN_NPM_TOKEN
 export UPDATE_README=$PLUGIN_UPDATE_README
-export README_LOCATION=$PLUGIN_README_LOCATION
+export README_LOCATION=${README_LOCATION:-README.md}
+export ADD_MODULES=$PLUGIN_ADD_MODULES
+export UPDATE_DOCKER_README=$PLUGIN_UPDATE_DOCKER_README
+
+if [ ! -z "$ADD_MODULES" ]; then
+  for i in "${ADD_MODULES[@]}"; do
+    yarn global add "$i"
+  done
+fi
 
 if [ "$PLUGIN_GIT_METHOD" == "gh" ]; then
   export GH_TOKEN=$PLUGIN_GITHUB_TOKEN
@@ -49,8 +57,11 @@ if [ "$MODE" = "predict" ]; then
   echo 'Running semantic release in dry mode...'
   semantic-release -d || exit 1
 else
-  [ $UPDATE_README = 'true' ] && echo "Updating README@${README_LOCATION:-README.md}" && markdown-toc /drone/src/${README_LOCATION:-README.md} --bullets="-" -i --no-firsth1
+  [ $UPDATE_README = 'true' ] && echo "Updating README@${README_LOCATION}" && markdown-toc /drone/src/${README_LOCATION} --bullets="-" -i --no-firsth1
   semantic-release $PLUGIN_ARGUMENTS || exit 1
 fi
 
-rm release.config.js
+if [ ! -z "$UPDATE_DOCKER_README" && "$UPDATE_DOCKER_README" == "true" ]; then
+  "Updating DockerHUB README@${README_LOCATION}"
+  exec ./update-docker-readme.sh
+fi
