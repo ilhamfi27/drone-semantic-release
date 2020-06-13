@@ -9,6 +9,10 @@
 Drone plugin for making semantic releases based on https://github.com/semantic-release/semantic-release. With some added twists ofc.
 
 <!-- toc -->
+
+- [Custom Release File](#custom-release-file)
+- [What it does](#what-it-does)
+
 <!-- tocstop -->
 
 ## Usage
