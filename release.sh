@@ -84,7 +84,7 @@ fi
 if [ -z $SEMANTIC_RELEASE ] || [ "$SEMANTIC_RELEASE" = "false" ]; then
   create_git_credentials
   [ $UPDATE_README_TOC = 'true' ] && echo "Updating README@${README_LOCATION}" && markdown-toc /drone/src/${README_LOCATION} --bullets="-" -i --no-firsth1
-  (cd /drone/src/ && git add ${README_LOCATION}) && git commit -m "chore(release): update readme toc [skip ci]" && git push
+  (cd /drone/src/ && git add ${README_LOCATION}) && git commit -m "chore(release): update readme toc [skip ci]" && git push -u origin $DRONE_REPO_BRANCH
 fi
 
 # handle dockerhub readme update
