@@ -10,6 +10,7 @@ export NPM_TOKEN=$PLUGIN_NPM_TOKEN
 export UPDATE_README_TOC=$PLUGIN_UPDATE_README_TOC
 export README_LOCATION=${README_LOCATION:-README.md}
 export ADD_MODULES=$PLUGIN_ADD_MODULES
+export ADD_APK=$PLUGIN_ADD_APK
 export UPDATE_DOCKER_README=$PLUGIN_UPDATE_DOCKER_README
 
 create_git_credentials() {
@@ -68,9 +69,17 @@ if [ ! -z $SEMANTIC_RELEASE ] && [ "$SEMANTIC_RELEASE" = "true" ]; then
   create_git_credentials
 
   # add semantic-release modules if defined
+  if [ ! -z "$ADD_APK" ]; then
+    for i in "${ADD_APK[@]}"; do
+      echo "Installing APK package $i..."
+      apk add --no-cache --no-progress $i
+    done
+  fi
+
   if [ ! -z "$ADD_MODULES" ]; then
     for i in "${ADD_MODULES[@]}"; do
-      yarn global add "$i"
+      echo "Installing node module $i..."
+      yarn global add $i
     done
   fi
 
