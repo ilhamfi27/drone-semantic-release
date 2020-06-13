@@ -87,8 +87,8 @@ if [ -z $SEMANTIC_RELEASE ] || [ "$SEMANTIC_RELEASE" = "false" ]; then
   (cd /drone/src/ && git add ${README_LOCATION}) && git commit -m "chore(release): update readme toc [skip ci]" && git push
 fi
 
-# Handle dockerhub readme update
+# handle dockerhub readme update
 if [ ! -z "$UPDATE_DOCKER_README" ] && [ "$UPDATE_DOCKER_README" == "true" ]; then
-  "Updating DockerHUB README@${README_LOCATION}"
-  exec ./update-docker-readme.sh
+  echo "Updating DockerHUB README@${README_LOCATION}"
+  exec /semantic-release/update-docker-readme.sh
 fi
