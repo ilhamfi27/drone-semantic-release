@@ -1,6 +1,7 @@
 #!/bin/bash
 
 export SEMANTIC_RELEASE=${PLUGIN_SEMANTIC_RELEASE:-true}
+export GIT_LOGIN=${PLUGIN_GIT_LOGIN:-$PLUGIN_GIT_USER_EMAIL}
 export GIT_AUTHOR_NAME=$PLUGIN_GIT_USER_NAME
 export GIT_AUTHOR_EMAIL=$PLUGIN_GIT_USER_EMAIL
 export GIT_COMMITTER_NAME=$PLUGIN_GIT_USER_NAME
@@ -21,10 +22,13 @@ create_git_credentials() {
   # create credentials for login
   if [ "$PLUGIN_GIT_METHOD" == "gh" ]; then
     export GH_TOKEN=$PLUGIN_GITHUB_TOKEN
+    export GIT_PASSWORD=$PLUGIN_GITHUB_TOKEN
   elif [ "$PLUGIN_GIT_METHOD" == "gl" ]; then
     export GL_TOKEN=$PLUGIN_GITLAB_TOKEN
+    export GIT_PASSWORD=$PLUGIN_GITLAB_TOKEN
   elif [ "$PLUGIN_GIT_METHOD" == "bb" ]; then
     export BB_TOKEN=$PLUGIN_BITBUCKET_TOKEN
+    export GIT_PASSWORD=$PLUGIN_BITBUCKET_TOKEN
   elif [ "$PLUGIN_GIT_METHOD" == "cr" ]; then
     export GIT_CREDENTIALS=$(node /semantic-release/create-credentials.js)
   else
@@ -47,7 +51,7 @@ create_git_credentials() {
   git config --global credential.helper store
 
   # login with credentials
-  git config --global credential.helper "!f() { echo 'username=${PLUGIN_GIT_LOGIN}'; echo 'password=${PLUGIN_GIT_PASSWORD}'; }; f"
+  git config --global credential.helper "!f() { echo 'username=${GIT_LOGIN}'; echo 'password=${GIT_PASSWORD}'; }; f"
 }
 
 update_readme_toc() {
