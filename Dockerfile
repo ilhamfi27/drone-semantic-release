@@ -6,6 +6,7 @@ RUN yarn global add semantic-release @semantic-release/changelog @semantic-relea
   && yarn global add markdown-toc \
   && apk update && apk add --no-cache --no-progress git && apk add --no-cache --no-progress bash \
   && apk add --no-cache --no-progress curl jq \
-  && chmod +x /semantic-release/release.sh
+  && chmod +x /semantic-release/release.sh \
+  && chmod +x /semantic-release/update-docker-readme.sh
 
 CMD ["/semantic-release/release.sh"]
