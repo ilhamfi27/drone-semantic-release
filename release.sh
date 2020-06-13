@@ -46,6 +46,11 @@ create_git_credentials() {
   git config --global user.email "$GIT_COMMITTER_EMAIL"
 }
 
+update_readme_toc() {
+  echo "Updating TOC README@${README_LOCATION}"
+  [ $UPDATE_README_TOC = 'true' ] && echo "Updating README@${README_LOCATION}" && markdown-toc /drone/src/${README_LOCATION} --bullets="-" -i --no-firsth1
+}
+
 # this is the semantic release part
 if [ ! -z $SEMANTIC_RELEASE ] && [ "$SEMANTIC_RELEASE" = "true" ]; then
 
@@ -72,6 +77,8 @@ if [ ! -z $SEMANTIC_RELEASE ] && [ "$SEMANTIC_RELEASE" = "true" ]; then
     echo 'Running semantic release in dry mode...'
     semantic-release -d || exit 1
   else
+    update_readme_toc
+
     semantic-release $PLUGIN_ARGUMENTS || exit 1
   fi
 
@@ -85,12 +92,12 @@ if [ -z $SEMANTIC_RELEASE ] || [ "$SEMANTIC_RELEASE" = "false" ]; then
 
   cp /semantic-release/release-config/readme-toc.js release.config.js
 
-  echo "Updating TOC README@${README_LOCATION}"
-  [ $UPDATE_README_TOC = 'true' ] && echo "Updating README@${README_LOCATION}" && markdown-toc /drone/src/${README_LOCATION} --bullets="-" -i --no-firsth1
+  update_readme_toc
 
   semantic-release || exit 1
 
   rm release.config.js
+
 fi
 
 # handle dockerhub readme update
