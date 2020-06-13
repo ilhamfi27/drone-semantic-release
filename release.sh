@@ -47,7 +47,7 @@ create_git_credentials() {
 }
 
 # this is the semantic release part
-if [ ! -z $SEMANTIC_RELEASE && "$SEMANTIC_RELEASE" = "true" ]; then
+if [ ! -z $SEMANTIC_RELEASE ] && [ "$SEMANTIC_RELEASE" = "true" ]; then
 
   export MODE=$PLUGIN_MODE
 
@@ -81,14 +81,14 @@ if [ ! -z $SEMANTIC_RELEASE && "$SEMANTIC_RELEASE" = "true" ]; then
 fi
 
 # handle readme toc update explicitly if semantic-release is disabled
-if [ -z $SEMANTIC_RELEASE || "$SEMANTIC_RELEASE" = "false" ]; then
+if [ -z $SEMANTIC_RELEASE ] || [ "$SEMANTIC_RELEASE" = "false" ]; then
   create_git_credentials
   [ $UPDATE_README_TOC = 'true' ] && echo "Updating README@${README_LOCATION}" && markdown-toc /drone/src/${README_LOCATION} --bullets="-" -i --no-firsth1
   (cd /drone/src/ && git add ${README_LOCATION}) && git commit -m "chore(release): update readme toc [skip ci]" && git push
 fi
 
 # Handle dockerhub readme update
-if [ ! -z "$UPDATE_DOCKER_README" && "$UPDATE_DOCKER_README" == "true" ]; then
+if [ ! -z "$UPDATE_DOCKER_README" ] && [ "$UPDATE_DOCKER_README" == "true" ]; then
   "Updating DockerHUB README@${README_LOCATION}"
   exec ./update-docker-readme.sh
 fi
