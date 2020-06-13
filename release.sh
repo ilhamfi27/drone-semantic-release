@@ -44,11 +44,13 @@ create_git_credentials() {
   # Set git variables
   git config --global user.name "$GIT_COMMITTER_NAME"
   git config --global user.email "$GIT_COMMITTER_EMAIL"
+
+  # login with credentials
+  git config credential.helper '!f() { sleep 1; echo "username=${PLUGIN_GIT_LOGIN}"; echo "password=${PLUGIN_GIT_PASSWORD}"; }; f'
 }
 
 update_readme_toc() {
-  echo "Updating TOC README@${README_LOCATION}"
-  [ $UPDATE_README_TOC = 'true' ] && echo "Updating README@${README_LOCATION}" && markdown-toc /drone/src/${README_LOCATION} --bullets="-" -i --no-firsth1
+  [ $UPDATE_README_TOC = 'true' ] && echo "Updating TOC README@${README_LOCATION}" && markdown-toc /drone/src/${README_LOCATION} --bullets="-" -i --no-firsth1
 }
 
 # this is the semantic release part
@@ -86,17 +88,13 @@ if [ ! -z $SEMANTIC_RELEASE ] && [ "$SEMANTIC_RELEASE" = "true" ]; then
 fi
 
 # handle readme toc update explicitly if semantic-release is disabled
-if [ -z $SEMANTIC_RELEASE ] || [ "$SEMANTIC_RELEASE" = "false" ]; then
+if [ -z $SEMANTIC_RELEASE ] || [ "$SEMANTIC_RELEASE" = "false" ] && [ "$UPDATE_README_TOC" == "true" ]; then
 
   create_git_credentials
 
-  cp /semantic-release/release-config/readme-toc.js release.config.js
-
   update_readme_toc
 
-  semantic-release || exit 1
-
-  rm release.config.js
+  (cd /drone/src/ && git add ${README_LOCATION} && git commit -m "chore(release): update readme toc [skip ci]" && git push -u origin $DRONE_REPO_BRANCH)
 
 fi
 
