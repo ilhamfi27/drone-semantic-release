@@ -10,6 +10,7 @@ Drone plugin for making semantic releases based on https://github.com/semantic-r
 
 <!-- toc -->
 
+- [Usage](#usage)
 - [Custom Release File](#custom-release-file)
 - [What it does](#what-it-does)
 
