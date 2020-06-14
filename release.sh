@@ -56,7 +56,7 @@ create_git_credentials() {
 }
 
 update_readme_toc() {
-  [ $UPDATE_README_TOC = 'true' ] && echo "Updating TOC README@${README_LOCATION}" && markdown-toc /drone/src/${README_LOCATION} --bullets="-" -i --no-firsth1
+  [ $UPDATE_README_TOC = 'true' ] && echo "Updating TOC README@${README_LOCATION}" && markdown-toc /drone/src/${README_LOCATION} --bullets="-" -i
 }
 
 # this is the semantic release part
