@@ -37,7 +37,7 @@ steps:
       git_method: gh # set for git authentication with gh (Github), gl (GitLab), bb (BitBucket), cr (Credentials)
       use_local_rc: false # use defaults or a custom rc file true | false
       # arguments: -- # arguments for passing to the semantic-release
-      git_user_name: bot # semantic release committer name (git config user.name)
+      git_user_name: bot # semantic release committer name (git config user.name), defaults to semantic-release
       git_user_email: bot@example.com # semantic release committer email (git config user.email)
       github_token: # semantic release token (for authentication)
         from_secret: github_token
