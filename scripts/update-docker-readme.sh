@@ -51,6 +51,8 @@ declare -r code=$(jq -n --arg msg "$(<$README_LOCATION)" \
 # Validate the result.
 if [[ "${code}" = "200" ]]; then
   echo "Successfully pushed README to Docker Hub."
+elif [[ "${code}" = "404" ]]; then
+  echo "Docker Hub repository has not been created yet."
 else
   echo "Unable to push README to Docker Hub, response code: %s" "${code}"
   exit 1
