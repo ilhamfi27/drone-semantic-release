@@ -57,7 +57,7 @@ create_git_credentials() {
 }
 
 update_readme_toc() {
-  [ $UPDATE_README_TOC = 'true' ] && echo "Updating TOC README@${README_LOCATION}" && markdown-toc /drone/src/${README_LOCATION} --bullets="-" -i
+  [[ $UPDATE_README_TOC = 'true' ]] && echo "Updating TOC README@${README_LOCATION}" && markdown-toc /drone/src/${README_LOCATION} --bullets="-" -i
 }
 
 # this is the semantic release part
@@ -92,11 +92,11 @@ if [ ! -z $SEMANTIC_RELEASE ] && [ "$SEMANTIC_RELEASE" = "true" ]; then
 
   if [ "$MODE" = "predict" ]; then
     echo 'Running semantic release in dry mode...'
-    semantic-release -d || exit 1
+    ${PLUGIN_OVERRIDE:-semantic-release -d $PLUGIN_ARGUMENTS} || exit 1
   else
     update_readme_toc
 
-    semantic-release $PLUGIN_ARGUMENTS || exit 1
+    ${PLUGIN_OVERRIDE:-semantic-release $PLUGIN_ARGUMENTS} || exit 1
   fi
 
   rm release.config.js

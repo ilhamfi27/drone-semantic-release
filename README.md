@@ -32,6 +32,8 @@ steps:
     settings:
       # arguments: -- # semantic release
       semantic_release: true # enable or disable semantic release
+      arguments: # if you want to add arguments to semantic release
+      override: # if you want to change the command compeletely
       add_apk: # install apk packages for exec step of semantic release
       add_modules: # install node packages if desired
       mode: release # "release" means the actual release and "predict" means to generate the version in dry run to use it e.g. before build
