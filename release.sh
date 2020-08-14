@@ -8,6 +8,9 @@ export GIT_AUTHOR_EMAIL=$PLUGIN_GIT_USER_EMAIL
 export GIT_COMMITTER_NAME=$PLUGIN_GIT_USER_NAME
 export GIT_COMMITTER_EMAIL=$PLUGIN_GIT_USER_EMAIL
 export NPM_TOKEN=$PLUGIN_NPM_TOKEN
+export NPM_USERNAME=$PLUGIN_NPM_USERNAME
+export NPM_PASSWORD=$PLUGIN_NPM_PASSWORD
+export NPM_EMAIL=$PLUGIN_NPM_EMAIL
 export UPDATE_README_TOC=$PLUGIN_UPDATE_README_TOC
 export README_LOCATION=${README_LOCATION:-README.md}
 export ADD_MODULES=$PLUGIN_ADD_MODULES
@@ -57,7 +60,16 @@ create_git_credentials() {
 }
 
 update_readme_toc() {
-  [[ $UPDATE_README_TOC = 'true' ]] && echo "Updating TOC README@${README_LOCATION}" && markdown-toc /drone/src/${README_LOCATION} --bullets="-" -i
+  if [[ $UPDATE_README_TOC = 'true' ]]; then
+
+    README_LOCATION=($(echo $README_LOCATION))
+
+    for i in ${README_LOCATION}; do
+      echo "Updating TOC README@${i}"
+      markdown-toc /drone/src/${i} --bullets="-" -i
+    done
+
+  fi
 }
 
 # this is the semantic release part

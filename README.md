@@ -46,9 +46,16 @@ steps:
         from_secret: github_token
       npm_token: # semantic release token (for authentication)
         from_secret: npm_token
+      # If you are not using this token you can use the general password login
+      npm_username:
+        from_secret: npm_username
+      npm_password:
+        from_secret: npm_password
+      npm_email:
+        from_secret: npm_email
       # arguments: -- # arguments for updating readme on dockerhub, readme_location is set from up
       update_readme_toc: true # update the readme utilizing https://www.npmjs.com/package/markdown-toc
-      readme_location: README.md # readme path
+      readme_location: "README.md $(find packages -maxdepth 2 -name README.md | paste -sd ' ')" # readme path
       # arguments: -- # arguments for updating readme on dockerhub, readme_location is set from up
       # if you want to push readme to docker hub in this step
       update_docker_readme: false
@@ -92,3 +99,29 @@ Runs on master branch only. Skips any actions below while on other branches.
 - automatically creates a semantic version number
 - attaches the version number as repo's git tag
 - automatically creates, populates and pushes CHANGELOG.md to your master branch
+
+## Use this with Gitlab-CI with some trick
+
+Just add the same variables with `PLUGIN_` prefix. Since Gitlab tries to run it in another directory this can be overcome by copying all the files in `/drone/src` then copying it back. It is not the perfect solution but it kind of works.
+
+```yml
+publish:
+  stage: publish
+  image: cenk1cenk2/drone-semantic-release
+  variables:
+    PLUGIN_GIT_METHOD: gl
+    PLUGIN_GIT_USER_EMAIL: $GIT_USER_EMAIL
+    PLUGIN_GITLAB_TOKEN: $GITLAB_TOKEN
+    PLUGIN_UPDATE_README_TOC: 'true'
+    PLUGIN_README_LOCATION: "README.md $(find packages -maxdepth 2 -name README.md | paste -sd ' ')"
+    PLUGIN_NPM_TOKEN: $NPM_TOKEN
+    DRONE_REPO_BRANCH: $CI_COMMIT_REF_NAME
+  before_script:
+    - apk add --no-cache --no-progress rsync
+    - rsync -a $CI_PROJECT_DIR/ /drone/src/
+    - cd /drone/src
+  script:
+    - /semantic-release/release.sh
+  after_script:
+    - rsync -a /drone/src/ $CI_PROJECT_DIR/
+```
