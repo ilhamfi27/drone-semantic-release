@@ -13,6 +13,7 @@ Drone plugin for making semantic releases based on https://github.com/semantic-r
 - [Usage](#usage)
 - [Custom Release File](#custom-release-file)
 - [What it does](#what-it-does)
+- [Use this with Gitlab-CI with some trick](#use-this-with-gitlab-ci-with-some-trick)
 
 <!-- tocstop -->
 
