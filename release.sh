@@ -127,7 +127,7 @@ if [ -z $SEMANTIC_RELEASE ] || [ "$SEMANTIC_RELEASE" = "false" ] && [ "$UPDATE_R
 fi
 
 # handle dockerhub readme update
-if [ ! -z "$UPDATE_DOCKER_README" ] && [ "$UPDATE_DOCKER_README" == "true" ]; then
-  echo "Updating DockerHUB README@${README_LOCATION}"
+if [ ! -z "$UPDATE_DOCKER_README" ] && [ "$UPDATE_DOCKER_README" != "false" ]; then
+  [ "$UPDATE_DOCKER_README" == "true" ] && $UPDATE_DOCKER_README="README.md"
   exec /semantic-release/scripts/update-docker-readme.sh
 fi
