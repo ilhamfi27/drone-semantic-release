@@ -18,7 +18,7 @@ steps:
       github_token:
         from_secret: github_token
       update_readme_toc: true
-      update_docker_readme: true
+      update_docker_readme: false
       docker_username:
         from_secret: docker_hub_username
       docker_password:
