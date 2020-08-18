@@ -4,8 +4,9 @@
 
 set -e # Exit immediately if a command exits with a non-zero status.
 
+echo "Updating DockerHUB README@${UPDATE_DOCKER_README}"
+
 # Set default value of parameters.
-README_LOCATION="${README_LOCATION}"
 DOCKER_USERNAME="${PLUGIN_DOCKER_USERNAME}"
 DOCKER_PASSWORD="${PLUGIN_DOCKER_PASSWORD}"
 DOCKER_REPO="${PLUGIN_DOCKER_REPO}"
@@ -20,8 +21,8 @@ elif [[ -z "$DOCKER_PASSWORD" ]]; then
 elif [[ -z "$DOCKER_REPO" ]]; then
   echo "Docker Hub repository not set."
   exit 1
-elif [[ ! -f "$README_LOCATION" ]]; then
-  echo "README not found."
+elif [[ ! -f "$UPDATE_DOCKER_README" ]]; then
+  echo "README@$UPDATE_DOCKER_README not found."
   exit 1
 fi
 
@@ -41,8 +42,8 @@ fi
 cd /drone/src
 
 # Push the README.
-echo "Pushing $README_LOCATION to $DOCKER_REPO ..."
-declare -r code=$(jq -n --arg msg "$(<$README_LOCATION)" \
+echo "Pushing $UPDATE_DOCKER_README to $DOCKER_REPO ..."
+declare -r code=$(jq -n --arg msg "$(<$UPDATE_DOCKER_README)" \
   '{"registry":"registry-1.docker.io","full_description": $msg }' |
   curl -s -o /dev/null -L -w "%{http_code}" \
     https://hub.docker.com/v2/repositories/"$DOCKER_REPO"/ \
