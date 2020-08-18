@@ -4,8 +4,6 @@
 
 set -e # Exit immediately if a command exits with a non-zero status.
 
-echo "Updating DockerHUB README@${UPDATE_DOCKER_README}"
-
 # Set default value of parameters.
 DOCKER_USERNAME="${PLUGIN_DOCKER_USERNAME}"
 DOCKER_PASSWORD="${PLUGIN_DOCKER_PASSWORD}"
@@ -25,6 +23,8 @@ elif [[ ! -f "$UPDATE_DOCKER_README" ]]; then
   echo "README@$UPDATE_DOCKER_README not found."
   exit 1
 fi
+
+echo "Updating DockerHUB README@${UPDATE_DOCKER_README}"
 
 # Login to Docker Hub.
 echo "Logging in to Docker Hub..."
