@@ -20,7 +20,7 @@ elif [[ -z "$DOCKER_PASSWORD" ]]; then
 elif [[ -z "$DOCKER_REPO" ]]; then
   echo "Docker Hub repository not set."
   exit 1
-elif [[ ! -r "$README_LOCATION" ]]; then
+elif [[ ! -f "$README_LOCATION" ]]; then
   echo "README not found."
   exit 1
 fi
@@ -37,6 +37,8 @@ if [[ "${token}" = "null" ]]; then
   echo "Unable to login to Docker Hub."
   exit 1
 fi
+
+cd /drone/src
 
 # Push the README.
 echo "Pushing $README_LOCATION to $DOCKER_REPO ..."
