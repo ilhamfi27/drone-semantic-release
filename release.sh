@@ -60,7 +60,7 @@ create_git_credentials() {
 }
 
 update_readme_toc() {
-  if [[ $UPDATE_README_TOC == "true" ]]; then
+  if [ $UPDATE_README_TOC == "true" ]; then
 
     README_LOCATION=($(echo $README_LOCATION))
 
