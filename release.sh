@@ -127,6 +127,6 @@ fi
 
 # handle dockerhub readme update
 if [ ! -z "$UPDATE_DOCKER_README" ] && [ "$UPDATE_DOCKER_README" != "false" ]; then
-  [ "$UPDATE_DOCKER_README" == "true" ] && $UPDATE_DOCKER_README="README.md"
+  [ "$UPDATE_DOCKER_README" == "true" ] && UPDATE_DOCKER_README="README.md"
   exec /semantic-release/scripts/update-docker-readme.sh
 fi
