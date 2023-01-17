@@ -7,7 +7,7 @@ trigger:
 
 steps:
   - name: semantic-release
-    image: oeoen/drone-semantic-release
+    image: ilhamfadhilah/drone-semantic-release
     settings:
       semantic_release: false
       git_method: gh
@@ -23,12 +23,12 @@ steps:
         from_secret: docker_hub_username
       docker_password:
         from_secret: docker_hub_password
-      docker_repo: oeoen/drone-semantic-release
+      docker_repo: ilhamfadhilah/drone-semantic-release
 
   - name: publish
     image: plugins/docker
     settings:
-      repo: oeoen/drone-semantic-release
+      repo: ilhamfadhilah/drone-semantic-release
       username:
         from_secret: docker_hub_username
       password:

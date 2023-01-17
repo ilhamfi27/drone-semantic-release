@@ -56,7 +56,7 @@ create_git_credentials() {
   git config --global credential.helper store
 
   # login with credentials
-  git config --global credential.helper "!f() { echo 'username=${GIT_LOGIN}'; echo 'password=${GIT_PASSWORD}'; }; f"
+  git config --global credential.helper $(node /semantic-release/create-git-helper.js)
 }
 
 update_readme_toc() {
