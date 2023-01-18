@@ -43,6 +43,8 @@ steps:
       # arguments: -- # arguments for passing to the semantic-release
       git_user_name: bot # semantic release committer name (git config user.name), defaults to semantic-release
       git_user_email: bot@example.com # semantic release committer email (git config user.email)
+      git_host: your-git.com # add custom host for `cr` git_method
+      git_host_proto: https # host protocol
       github_token: # semantic release token (for authentication)
         from_secret: github_token
       npm_token: # semantic release token (for authentication)
@@ -84,6 +86,8 @@ gitlab_token: # semantic release token (for authentication)
 or for any git server (including BitBucket cloud which does not support tokens):
 
 ```yml
+git_host: your-git.com
+git_host_proto: https
 git_login: bot
 git_password:
   from_secret: password
